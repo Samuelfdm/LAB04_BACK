@@ -6,6 +6,17 @@ public class Tarea {
     private String descripcion;
     private boolean estado;
 
+    public Tarea(){
+
+    }
+
+    public Tarea(String id, String nombre, String descripcion, boolean estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
+    }
+
     public String getId() {
         return id;
     }

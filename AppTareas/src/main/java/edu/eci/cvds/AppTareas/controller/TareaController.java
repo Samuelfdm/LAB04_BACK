@@ -5,26 +5,21 @@ import java.util.List;
 import edu.eci.cvds.AppTareas.model.Tarea;
 import edu.eci.cvds.AppTareas.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tareas")
 public class TareaController {
 
-    private TareaService tareaService;
+    private TareaService tareaService; //Inyectado por constructor
 
     public TareaController(TareaService tareaService){
         this.tareaService = tareaService;
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Tarea crearTarea(@RequestBody Tarea tarea) {
         return tareaService.crear(tarea);
     }
@@ -32,5 +27,10 @@ public class TareaController {
     @GetMapping
     public List<Tarea> consultarTareas() {
         return tareaService.obtenerTareas();
+    }
+
+    @GetMapping("/{tareaId}")
+    public Tarea consultarTarea(@PathVariable String tareaId) {
+        return tareaService.obtenerTarea(tareaId);
     }
 }
