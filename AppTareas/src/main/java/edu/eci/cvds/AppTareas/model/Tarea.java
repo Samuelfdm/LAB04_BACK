@@ -1,9 +1,18 @@
 package edu.eci.cvds.AppTareas.model;
 
 public class Tarea {
+    private String id;
     private String nombre;
     private String descripcion;
-    private String estado;
+    private boolean estado;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -21,11 +30,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 }
