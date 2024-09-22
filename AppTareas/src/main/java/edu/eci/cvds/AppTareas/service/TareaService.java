@@ -26,4 +26,8 @@ public class TareaService {
     public List<Tarea> obtenerTareas(){
         return tareas.keySet().stream().map(tareas::get).toList();
     }
+
+    public Tarea obtenerTarea(String tareaId) {
+        return tareas.get(tareaId);
+    }
 }

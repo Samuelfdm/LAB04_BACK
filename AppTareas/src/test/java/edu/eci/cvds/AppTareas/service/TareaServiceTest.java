@@ -49,5 +49,16 @@ class TareaServiceTest {
         List<Tarea> tareas = tareaService.obtenerTareas();
         assertEquals(2, tareas.size());
     }
+
+    @Test
+    void testObtenerTarea() {
+        // Crear tarea
+        Tarea tareaCreada = tareaService.crear(tarea1);
+
+        // Verificar que se obtiene la tarea
+        Tarea tareaObtenida = tareaService.obtenerTarea(tareaCreada.getId());
+        assertNotNull(tareaObtenida);
+        assertEquals(tareaCreada.getId(), tareaObtenida.getId());
+    }
 }
 
