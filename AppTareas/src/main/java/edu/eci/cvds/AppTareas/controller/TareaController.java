@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/tareas")
 public class TareaController {
-
 
     private TareaService tareaService;
 
@@ -29,5 +27,10 @@ public class TareaController {
     @PostMapping
     public Tarea crearTarea(@RequestBody Tarea tarea) {
         return tareaService.crear(tarea);
+    }
+
+    @GetMapping
+    public List<Tarea> consultarTareas() {
+        return tareaService.obtenerTareas();
     }
 }
