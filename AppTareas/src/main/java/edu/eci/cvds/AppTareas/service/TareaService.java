@@ -27,4 +27,18 @@ public class TareaService {
     public Tarea obtenerTarea(String tareaId) {
         return tareaRepository.findById(tareaId).orElse(null);
     }
+
+    public void eliminarTarea(String tareaId){
+        tareaRepository.deleteById(tareaId);
+    }
+
+    public boolean cambiarEstado(String tareaId) {
+        Tarea tarea = obtenerTarea(tareaId);
+        if (tarea != null) {
+            tarea.setEstado(!tarea.getEstado());
+            tareaRepository.save(tarea);
+            return true;
+        }
+        return false;
+    }
 }
