@@ -33,4 +33,14 @@ public class TareaController {
     public Tarea consultarTarea(@PathVariable String tareaId) {
         return tareaService.obtenerTarea(tareaId);
     }
+
+    @GetMapping("cambio/{tareaId}")
+    public boolean cambiarEstado(@PathVariable String tareaId) {
+        return tareaService.cambiarEstado(tareaId);
+    }
+
+    @DeleteMapping("/{tareaId}")
+    public void eliminarTarea(@PathVariable String tareaId) {
+        tareaService.eliminarTarea(tareaId);
+    }
 }
