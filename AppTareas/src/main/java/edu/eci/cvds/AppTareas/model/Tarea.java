@@ -1,10 +1,20 @@
 package edu.eci.cvds.AppTareas.model;
 
+import java.lang.annotation.Documented;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "tareas")
+@Data
 public class Tarea {
+    @Id
     private String id;
     private String nombre;
     private String descripcion;
     private boolean estado;
+
 
     public Tarea(){
 
