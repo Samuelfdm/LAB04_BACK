@@ -15,6 +15,6 @@ class TareaTest {
 
         assertEquals("Tarea 1", tarea.getNombre());
         assertEquals("Descripción de la tarea 1", tarea.getDescripcion());
-        assertEquals(false, tarea.getEstado());
+        assertFalse(tarea.getEstado());
     }
 }
