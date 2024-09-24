@@ -43,4 +43,9 @@ public class TareaController {
     public void eliminarTarea(@PathVariable String tareaId) {
         tareaService.eliminarTarea(tareaId);
     }
+
+    @PutMapping("/{tareaId}")
+    public void actualizarTarea(@PathVariable String tareaId, @RequestBody Tarea nuevaTarea) {
+        tareaService.actualizarTarea(tareaId,nuevaTarea);
+    }
 }

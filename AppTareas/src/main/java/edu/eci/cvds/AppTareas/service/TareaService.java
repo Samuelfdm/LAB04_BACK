@@ -32,6 +32,14 @@ public class TareaService {
         tareaRepository.deleteById(tareaId);
     }
 
+    public void actualizarTarea(String tareaId,Tarea nuevaTarea){
+        Tarea tarea = obtenerTarea(tareaId);
+        tarea.setNombre(nuevaTarea.getNombre());
+        tarea.setDescripcion(nuevaTarea.getDescripcion());
+        tarea.setEstado(nuevaTarea.getEstado());
+        tareaRepository.save(tarea);
+    }
+
     public boolean cambiarEstado(String tareaId) {
         Tarea tarea = obtenerTarea(tareaId);
         if (tarea != null) {
