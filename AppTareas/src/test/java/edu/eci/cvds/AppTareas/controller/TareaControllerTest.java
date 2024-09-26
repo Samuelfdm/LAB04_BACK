@@ -90,4 +90,18 @@ class TareaControllerTest {
 
         verify(tareaService, times(1)).eliminarTarea(tarea.getId());
     }
+
+    @Test
+    void testActualizarTarea() throws Exception {
+        Tarea nuevaTarea = new Tarea(tarea.getId(), "Tarea Actualizada", "Descripción Actualizada", true);
+
+        doNothing().when(tareaService).actualizarTarea(anyString(), any(Tarea.class));
+
+        mockMvc.perform(put("/tareas/" + tarea.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"nombre\": \"Tarea Actualizada\", \"descripcion\": \"Descripción Actualizada\", \"estado\": true }"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(tareaService, times(1)).actualizarTarea(eq(tarea.getId()), any(Tarea.class));
+    }
 }

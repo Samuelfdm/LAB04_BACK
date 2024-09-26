@@ -79,6 +79,19 @@ class TareaServiceTest {
     }
 
     @Test
+    void testCambiarEstadoTareaNoExistente() {
+        String tareaId = UUID.randomUUID().toString();
+
+        // Simulamos que la tarea no existe devolviendo Optional.empty()
+        when(tareaRepository.findById(tareaId)).thenReturn(Optional.empty());
+
+        boolean resultado = tareaService.cambiarEstado(tareaId);
+
+        assertFalse(resultado);  // Debe devolver falso porque la tarea no existe
+        verify(tareaRepository, never()).save(any(Tarea.class));  // Verificamos que no se intenta guardar una tarea
+    }
+
+    @Test
     void testObtenerTareas() {
         Tarea tarea1 = new Tarea(UUID.randomUUID().toString(), "Tarea 1", "Descripción 1", false);
         Tarea tarea2 = new Tarea(UUID.randomUUID().toString(), "Tarea 2", "Descripción 2", true);
@@ -89,5 +102,38 @@ class TareaServiceTest {
 
         assertEquals(2, tareas.size());
         verify(tareaRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testActualizarTarea() {
+        String tareaId = UUID.randomUUID().toString();
+        Tarea tareaExistente = new Tarea(tareaId, "Tarea 1", "Descripción 1", false);
+        Tarea nuevaTarea = new Tarea(tareaId, "Tarea Actualizada", "Descripción Actualizada", true);
+
+        when(tareaRepository.findById(tareaId)).thenReturn(Optional.of(tareaExistente));
+
+        tareaService.actualizarTarea(tareaId, nuevaTarea);
+
+        verify(tareaRepository, times(1)).findById(tareaId);
+        verify(tareaRepository, times(1)).save(tareaExistente);
+
+        assertEquals("Tarea Actualizada", tareaExistente.getNombre());
+        assertEquals("Descripción Actualizada", tareaExistente.getDescripcion());
+        assertTrue(tareaExistente.getEstado());
+    }
+
+    @Test
+    void testActualizarTareaNoExistente() {
+        String tareaIdInexistente = UUID.randomUUID().toString();
+        Tarea nuevaTarea = new Tarea(tareaIdInexistente, "Nueva Tarea", "Nueva Descripción", true);
+
+        when(tareaRepository.findById(tareaIdInexistente)).thenReturn(Optional.empty());
+
+        // Espera que se lance una IllegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> {
+            tareaService.actualizarTarea(tareaIdInexistente, nuevaTarea);
+        });
+
+        verify(tareaRepository, never()).save(any(Tarea.class)); // Nunca debe intentar guardar la tarea.
     }
 }

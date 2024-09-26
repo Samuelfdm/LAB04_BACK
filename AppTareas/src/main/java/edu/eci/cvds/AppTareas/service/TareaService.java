@@ -34,10 +34,14 @@ public class TareaService {
 
     public void actualizarTarea(String tareaId,Tarea nuevaTarea){
         Tarea tarea = obtenerTarea(tareaId);
-        tarea.setNombre(nuevaTarea.getNombre());
-        tarea.setDescripcion(nuevaTarea.getDescripcion());
-        tarea.setEstado(nuevaTarea.getEstado());
-        tareaRepository.save(tarea);
+        if (tarea != null) {
+            tarea.setNombre(nuevaTarea.getNombre());
+            tarea.setDescripcion(nuevaTarea.getDescripcion());
+            tarea.setEstado(nuevaTarea.getEstado());
+            tareaRepository.save(tarea);
+        } else {
+            throw new IllegalArgumentException("Tarea con ID " + tareaId + " no existe");
+        }
     }
 
     public boolean cambiarEstado(String tareaId) {
