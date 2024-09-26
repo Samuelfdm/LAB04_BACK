@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://127.0.0.1:8081", "http://127.0.0.1:8000", "http://127.0.0.1:5500")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("Content-Type", "Authorization")
+                .allowedHeaders("*")
                 .allowCredentials(true);
     }
 }
