@@ -79,6 +79,19 @@ class TareaServiceTest {
     }
 
     @Test
+    void testCambiarEstadoTareaNoExistente() {
+        String tareaId = UUID.randomUUID().toString();
+
+        // Simulamos que la tarea no existe devolviendo Optional.empty()
+        when(tareaRepository.findById(tareaId)).thenReturn(Optional.empty());
+
+        boolean resultado = tareaService.cambiarEstado(tareaId);
+
+        assertFalse(resultado);  // Debe devolver falso porque la tarea no existe
+        verify(tareaRepository, never()).save(any(Tarea.class));  // Verificamos que no se intenta guardar una tarea
+    }
+
+    @Test
     void testObtenerTareas() {
         Tarea tarea1 = new Tarea(UUID.randomUUID().toString(), "Tarea 1", "Descripción 1", false);
         Tarea tarea2 = new Tarea(UUID.randomUUID().toString(), "Tarea 2", "Descripción 2", true);
